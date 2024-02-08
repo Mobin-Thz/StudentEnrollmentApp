@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using StudentEnrollment.Data;
+
 namespace StudentEnrollmentApi
 {
     public class Program
@@ -6,6 +9,12 @@ namespace StudentEnrollmentApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var conn = builder.Configuration.GetConnectionString("SchoolEnrollmentDbConnection");
+            builder.Services.AddDbContext<StudentEnrollmentDbContext>( options => { 
+                options.UseSqlServer(conn);
+            });
+
 
             // Add services to the container.
             builder.Services.AddAuthorization();
